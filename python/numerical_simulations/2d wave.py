@@ -4,8 +4,10 @@ from PIL import Image
 from matplotlib import animation as anim
 
 plt.style.use("dark_background")
+import os
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
-img  = Image.open("c:/Users/gts00/OneDrive/Área de Trabalho/data/python/home.png")
+img  = Image.open("heart_level.png")
 im_data = np.array(img).astype(np.float32)
 im_data/=255
 im_data[:,:,3] = (1-im_data[:,:,0])*255
@@ -36,7 +38,7 @@ t = 0
 x = np.linspace(0,im_data.shape[0])
 y = np.linspace(0,im_data.shape[1])
 circle  = np
-#u[90,110] = -10
+u[200,200] = 40
 
 #u[0:40,:] = -1
 #u[80,80] = 20
@@ -59,8 +61,7 @@ def solve(n):
 
     if not (n%10):
         print(f"frame: {n}")
-    if n == 2:
-        u[150:170,80:100] = 1
+    
 
     for i in range(substeps):
         #u[20,20] += 1
@@ -97,12 +98,13 @@ def solve(n):
 
 print("running animation")
 data = anim.FuncAnimation(fig, solve, frames=400, interval=1, repeat=True)
-plt.show()
+#plt.show()
 
 print("saving")
 writer = anim.PillowWriter(fps=30,bitrate=1800)
-path = 'C:/Users/gts00/OneDrive/Área de Trabalho/data/python/home.gif'
+path = 'heart_wave.gif'
 data.save(path,writer=writer)
 
-
+from gif_to_mp4 import Converter
+Converter(path,"heart_wave.mp4")
 print("done")

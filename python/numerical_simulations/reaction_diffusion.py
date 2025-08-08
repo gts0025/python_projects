@@ -27,8 +27,7 @@ c_b_h = []
 line_a, = ax[1].plot([], [], label='Reactant A')
 line_b, = ax[1].plot([], [], label='Reactant B')
 y_lim = 5*10**4
-ax[1].set_xlim(0, 400)
-ax[1].set_ylim(-y_lim,y_lim)
+
 dt = 0.01
 
 def diffuse(field,c = 1,dt = 0.01,dx = 2):
@@ -58,7 +57,11 @@ def run(frame):
     c_a_h.append(reactant_a.sum())
     c_b_h.append(reactant_b.sum())
 
+
     x_list = np.arange(len(c_a_h))
+
+    ax[1].set_xlim(0, len(c_a_h))
+    ax[1].set_ylim(min(c_a_h+c_b_h),max(c_a_h+c_b_h))
     
     line_a.set_data(x_list,c_a_h)
     line_b.set_data(x_list,c_b_h)
