@@ -38,7 +38,7 @@ t = 0
 x = np.linspace(0,im_data.shape[0])
 y = np.linspace(0,im_data.shape[1])
 circle  = np
-u[200,200] = 40
+u[190:210,190:210] = 1
 
 #u[0:40,:] = -1
 #u[80,80] = 20
