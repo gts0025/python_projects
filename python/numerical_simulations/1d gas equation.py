@@ -9,9 +9,14 @@ plt.style.use("dark_background")
 plt.winter()
 u = np.zeros(200)
 h = np.ones(200)
-h[98:102] = 3
+b = np.ones(200)*0.1
+
+h[50:] = 0.5
+b[150:] += 0.3
+h[150:] -= 0.3
 
 volume = h.sum()
+
 
 k = 1
 d = 0.9
@@ -41,7 +46,7 @@ def step(substeps):
     
     #solve
     dht = -(derivative(u*h) - second_derivative(h)*d)
-    dut = -(derivative(p)/h)
+    dut = -(derivative(p + b)/h)
     u += dut*(dt/substeps)
     h += dht*(dt/substeps)
 
@@ -56,12 +61,15 @@ def solve(steps,substeps):
             step(substeps) 
 
         #plotting 
-        plt.pause(0.001)
-        plt.clf()
-        plt.ylim((0.5,2))
+       
         plt.title("1d euler gas equation")
         plt.xlabel("distance")
         plt.ylabel("pressure")
-        plt.plot(h)
+        plt.ylim((0,2))
+        plt.plot(h+b)
+        plt.plot(b)
+        plt.pause(0.001)
+        plt.clf()
+        
        
 solve(700,200)
