@@ -1,22 +1,41 @@
 
-from vector2_class import*
+from vector2_class import *
 import pygame
-import os
-os.chdir(os.path.dirname(os.path.abspath(__file__)))
+import os, sys
+
+# Use the script folder when not bundled; use _MEIPASS when bundled
+def resource_path(relative_path: str) -> str:
+    if hasattr(sys, "_MEIPASS"):
+        base_path = sys._MEIPASS  # PyInstaller temp dir
+    else:
+        base_path = os.path.dirname(os.path.abspath(__file__))  # folder of this .py
+    return os.path.join(base_path, relative_path)
 
 size = 400
-pygame.init()
-big = pygame.mixer.Sound("big_explosion.wav")
-charged = pygame.mixer.Sound("power_charged.wav")
-wall_hit = pygame.mixer.Sound("wall_hit.wav")
-big.set_volume(100)
-gun_sound = pygame.mixer.Sound("gunshot3.wav")
-enemy_sound = pygame.mixer.Sound("gunshot2.wav")
-death_sound = pygame.mixer.Sound("death_sound.wav")
 
-ghost_front = pygame.image.load("ghost_front.png")
-spawn_image = pygame.image.load("spawn_point.png")
-smoke_image = pygame.image.load("big_smoke.png")
+# Important: init mixer BEFORE loading sounds
+pygame.mixer.pre_init(44100, -16, 2, 512)
+pygame.init()
+
+# Sounds
+big = pygame.mixer.Sound(resource_path("assets/sounds/big_explosion.wav"))
+charged = pygame.mixer.Sound(resource_path("assets/sounds/power_charged.wav"))
+wall_hit = pygame.mixer.Sound(resource_path("assets/sounds/wall_hit.wav"))
+gun_sound = pygame.mixer.Sound(resource_path("assets/sounds/gunshot3.wav"))
+enemy_sound = pygame.mixer.Sound(resource_path("assets/sounds/gunshot2.wav"))
+death_sound = pygame.mixer.Sound(resource_path("assets/sounds/death_sound.wav"))
+
+# Images
+ghost_front = pygame.image.load(resource_path("assets/images/ghost_front.png"))
+spawn_image = pygame.image.load(resource_path("assets/images/spawn_point.png"))
+smoke_image = pygame.image.load(resource_path("assets/images/big_smoke.png"))
+
+big.set_volume(1.0)           # 0.0–1.0
+smoke_image.set_alpha(10)
+screen = pygame.display.set_mode((size, size))
+
+
+big.set_volume(1)
 smoke_image.set_alpha(10)
 screen = pygame.display.set_mode((size,size))
 
@@ -27,10 +46,7 @@ class Player:
         self.speed = Vector2(0,0)
         self.t = 5
         self.hp = 100
-        self.back = pygame.image.load("back_walk.png")
-        self.forward = pygame.image.load("walk_big.png")
-        self.left = pygame.image.load("walk_left.png")
-        self.right = pygame.image.load("walk_right.png")
+       
         
     def bounce(self):
         self.pos.add(self.speed)
@@ -233,7 +249,7 @@ spawn_positins = []
 max_spawn_delay = 20
 spawn_delay = 100
 smoke_list = []
-pause = 0
+pause = 1
 pause_delay = 100
 level = 1
 Keys = 0
@@ -272,6 +288,7 @@ def update_temperature():
 walking = 0
 gen_spawns()
 gen_smoke(20)
+
 while True:
     pygame.event.set_grab(True)
     player.bounce()
