@@ -1,19 +1,19 @@
 import numpy as np
 import matplotlib.pyplot as plt 
 plank = 10
-i = 2.0j
+i = 0.3j
 b = 5
 c = 10
-dt = 0.01
+dt = 0.0001
 size = 20
-dx = 1
-cells = round(2*size/dx)
+dx = 0.2
+cells = round(size/dx)
 
 potential = np.zeros([cells])
 line = np.linspace(-size/2,size/2,cells)
 wave = np.zeros(shape=[cells],dtype=complex)
 wave.imag = 1/(np.exp(line**2))
-potential = (abs(line) > 5)*1
+
 
 
 
@@ -25,7 +25,7 @@ def show(steps,substeps):
         
         plt.plot(line,potential,label = "potential")
         plt.plot(line,wave.real,label = "real wave")
-        #plt.plot(line,wave.imag,label = "imag wave")
+        plt.plot(line,wave.imag,label = "imag wave")
         
         plt.pause(0.001)
         plt.clf()
@@ -35,5 +35,5 @@ def show(steps,substeps):
             wave[1:-1] += ((d2ux*b + potential[1:-1]*wave[1:-1])/(i*plank))*dt
         
 
-show(1000,10)
+show(1000,80)
 plt.show()
