@@ -8,7 +8,7 @@ def forward(data:np.ndarray,time:np.ndarray,f_range:list = [0,1000], samples:int
 
 
     frequecies = []
-    for f in np.linspace(f_range[0],f_range[1],10000):
+    for f in np.linspace(f_range[0],f_range[1],samples):
         a = (np.sin(time*f)*data).mean() 
         b = (np.cos(time*f)*data).mean()
         frequecies.append([f,a,b])
