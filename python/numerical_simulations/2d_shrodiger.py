@@ -1,11 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt 
-plank = 0.1
+plank = 0.01
 i = 1j
 m = 1
 dt = 0.01
 size  = 20
-dx = 0.2
+dx = 0.3
 cells = round(size/dx)
 
 x_line = np.linspace(-size/2,size/2,cells)
@@ -18,19 +18,19 @@ gaussian = 1/np.exp(a_x**2 + a_y**2)
 wave.imag = (gaussian)
 
 
-fig = plt.figure()
-ax = fig.add_subplot()
-
 
         
 def show(steps,substeps):
+    p = []
     for step in range(steps):
+
         plt.title(f"shrodiger equation: time:{round(step*substeps*dt*plank)}s")
-    
-        
-        cont = ax.imshow(abs(wave)**2, cmap="jet")
+        plt.imshow(abs(wave)**2, cmap="jet")
+        p.append((abs(wave)**2).mean())
+        #plt.plot(p)
+        plt.colorbar()
         plt.pause(0.0001)
-        ax.cla()
+        plt.clf()
 
         for substep in range(substeps):
             d2ux = (wave[2:,1:-1] + wave[:-2,1:-1] - 2*wave[1:-1,1:-1])/(dx**2)
@@ -39,5 +39,5 @@ def show(steps,substeps):
 
         
 
-show(2000,40)
+show(2000,100)
 plt.show()

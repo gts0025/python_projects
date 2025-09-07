@@ -1,7 +1,10 @@
 #1d gas equation
 import numpy as np
 import matplotlib.pyplot as plt
+import os
 plt.style.use("dark_background")
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
 # dht = h(du)
 # dut = dp/h
 # p = kh
