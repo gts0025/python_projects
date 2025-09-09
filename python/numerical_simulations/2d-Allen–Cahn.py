@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 import imageio
 
 import os
-os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 
 plt.style.use("dark_background")
@@ -16,7 +15,7 @@ dt = 0.01
 
 
 frames = []
-for i in range(600):
+for i in range(60):
 
     #laplacian poerator
     d2u = (
@@ -51,7 +50,7 @@ for i in range(600):
     plt.clf()
 
 
-imageio.mimsave("allen_cahn.gif", frames, fps=20)
+imageio.mimsave("test.gif", frames, fps=20)
 from gif_to_mp4 import Converter
-final = Converter("allen_cahn.gif","allen_cahn.mp4")
+final = Converter("test.gif","test.mp4")
 
