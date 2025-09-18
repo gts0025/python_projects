@@ -33,10 +33,14 @@ for i in range(rate*duration):
 sim_data = np.array(data,np.int16)
 wavfile.write("hook_law_sim.wav",rate,sim_data)
 
-#sns.lineplot(x = time,y = sim_data)
-frequency = fourier.forward(sim_data,time,[0,2*np.sqrt(abs(k))/(np.pi*2)],2000)
+frequency = fourier.forward(sim_data,time,[600,1000],100)
 frequency = np.array(frequency)
+
+
+plt.title("fourier series on the numerical hooke's law ")
 sns.lineplot(x = frequency[:,0],y = np.sqrt(frequency[:,1]**2 + frequency[:,2]**2))
+plt.xlabel("frequencies")
+plt.ylabel("amplitudes")
 plt.show()
 
 
