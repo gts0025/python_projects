@@ -1,5 +1,5 @@
 
-# this file uses 1d wave equation to  
+# this file uses 1d wave equation to 
 
 
 import os
@@ -25,14 +25,13 @@ ftime = int(voice.shape[0]/sps)# stopping time
 
 
 #initial gaussioan disturbance
-x = np.linspace(-5,5,100)
-gaussian = np.exp(-x**2) 
-gaussian = np.zeros_like(x)
-up = gaussian
-uc = gaussian
+x = np.linspace(0,10,300)
+space = np.zeros_like(x)
+up = space
+uc = space
 
-k = 3e3*sps # density
-d = 4e-8
+k = 300# density
+d = 4e-8 # viscosity
 dt = 1/sps # stime step size
 data = [] # final sound data 
 
@@ -53,15 +52,15 @@ data = [] # final sound data
 def wave_step():
     global uc, up, k, dt
     d2ux = np.zeros_like(up)
-    #dx = x[1]-x[0]
-    dx = 1
+    dx = x[1]-x[0]
+    #dx = 1
 
-    d2ux[1:-1] = k*(uc[2:] + uc[:-2] - 2*uc[1:-1])/dx**2
+    d2ux[1:-1] = k**2*(uc[2:] + uc[:-2] - 2*uc[1:-1])/dx**2
     un  = (2*uc - up + (d2ux*dt*dt)  - ((uc-up)/dt)*d) 
     up = uc
     uc = un
 
-    un *- 0.999
+    un *= 1-(d*dt)
     uc[0] = uc[1]
     uc[-1] = uc[-2]
 
@@ -72,16 +71,16 @@ def get_sound():
     
     for i in range(voice.shape[0]):
         wave_step()
-        uc[-1] = voice[i]
+        uc[100] = voice[i]
        
         data.append(uc[1])
-    data /= np.max(np.abs(data)) 
     data = np.array(data)
-    sound = np.int16(data*20000)
+    data /= np.max(np.abs(data)) 
+    sound = np.int16(data*2e4)
     wavfile.write("1d wave_sound.wav",sps,sound)
     #final = wavfile.read("1d wave_sound.wav")
-    sdvc.play(voice,sps)
-    sdvc.wait()
+    #sdvc.play(voice,sps)
+    #sdvc.wait()
     sdvc.play(sound,sps)
     sdvc.wait()
     #echo = voice + sound*0.1
@@ -103,8 +102,8 @@ def viz_sumualtion(iterations):
             wave_step()
             
         plt.plot(uc)
-        #plt.ylim(-1,1)
-        plt.pause(0.001)
+        plt.ylim(-1,1)
+        plt.pause(1/sps)
 
 def viz_data():
     get_sound()
@@ -118,7 +117,7 @@ def viz_freq():
     frequency = fourier.forward(data,np.linspace(0,ftime,ftime*sps),[0,1000],10000)
     frequency = np.array(frequency)
 
-
+    
     plt.title("fourier series")
     plt.plot(frequency[:,0],np.sqrt(frequency[:,1]**2 + frequency[:,2]**2))
     plt.xlabel("frequencies")
