@@ -15,7 +15,7 @@ cells = round(size/dx)
 
 line = np.linspace(-size/2,size/2,cells)
 wave = np.zeros(shape=[cells],dtype=complex)
-wave.imag = (1/np.exp(line*line))
+wave.imag = np.pi*(1/(line*line + 1))
 
 
 fig = plt.figure()

@@ -11,12 +11,16 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 plt.winter()
 u = np.zeros(200)
-h = np.ones(200)
-b = np.ones(200)*0.1
 
-h[50:] = 0.5
-b[150:] += 0.3
-h[150:] -= 0.3
+x = np.linspace(0,1,u.shape[0]) 
+y = abs(x-0.5)**2 + np.random.random(x.shape[0])*0.01
+h = np.ones_like(u)*0.5
+b = y
+
+
+
+h[75:125] += 0.4
+#h[20:30] += 0.4
 
 volume = h.sum()
 
@@ -41,15 +45,16 @@ def step(substeps):
     #boundary cpndition
     h[0] = h[1]
     h[-1] = h[-2]
-    u[0] = u[1]
-    u[-1] = u[-2]
+    #u[0] = u[1]
+    #u[-1] = u[-2]
     
     #pressure
     p = h**k
     
     #solve
-    dht = -(derivative(u*h) - second_derivative(h)*d)
-    dut = -(derivative(p + b)/h)
+    
+    dht = -(derivative(u*p) - second_derivative(h)*d)
+    dut = -(derivative(p)/h - second_derivative(u)*d)
     u += dut*(dt/substeps)
     h += dht*(dt/substeps)
 
@@ -69,8 +74,9 @@ def solve(steps,substeps):
         plt.xlabel("distance")
         plt.ylabel("pressure")
         plt.ylim((0,2))
-        plt.plot(h+b)
-        plt.plot(b)
+        plt.plot(h)
+        #plt.plot(u)
+        #plt.plot(b)
         plt.pause(0.001)
         plt.clf()
         
