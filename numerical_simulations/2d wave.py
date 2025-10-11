@@ -98,7 +98,7 @@ def solve(n):
 
 print("running animation")
 data = anim.FuncAnimation(fig, solve, frames=400, interval=1, repeat=True)
-#plt.show()
+plt.show()
 
 print("saving")
 writer = anim.PillowWriter(fps=30,bitrate=1800)

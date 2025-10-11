@@ -7511,17 +7511,18 @@ a.anchor-link {
 <!-- End of mermaid configuration --></head>
 <body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
 <main>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a2f7ea04">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d3fd6ce3">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>setup</p>
+<p>this data is pretty simple, and even humans can read it.<br/>
+so we can use simple models like decision tree classifiers to analise and predict them</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs jp-mod-noInput" id="cell-id=2e91baf7">
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=f8d3c3c9">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs jp-mod-noInput celltag_hide_code" id="cell-id=2e91baf7">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput celltag_hide_code" id="cell-id=f8d3c3c9">
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
@@ -7555,7 +7556,7 @@ This might suggests that <strong>elevated humidity</strong> creates favorable co
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=ec1a1cd0">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput celltag_hide_code" id="cell-id=ec1a1cd0">
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
@@ -7585,7 +7586,7 @@ This might suggests that <strong>elevated humidity</strong> creates favorable co
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=f29de48b">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput celltag_hide_code" id="cell-id=f29de48b">
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
@@ -7611,11 +7612,12 @@ This might suggests that <strong>elevated humidity</strong> creates favorable co
 <p>rainfall kinda behaves similarly to humidity, <br/>
 sample size is small, but anything over <strong>20mm</strong> has high <strong>disease</strong> risk<br/>
 it's a good idea to get more data on that range.</p>
-<p>well i think it's time to write some models</p>
+<p>well i think it's time to write some models,
+we'll train a decision tree classifier on the data</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=008ff3c2">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput celltag_hide_code" id="cell-id=008ff3c2">
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
@@ -7641,37 +7643,28 @@ Accuracy: 0.77
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>well i was wrong, this data seems to be a little tougher than i expected
-we're goonna need bigger <strong>guns</strong></p>
+we're goonna need bigger guns, a <strong>random forest</strong> model might do the trick</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=7f8a374c">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput celltag_hide_code" id="cell-id=7f8a374c">
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child">
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>
-<span class="ansi-red-intense-fg ansi-bold">---------------------------------------------------------------------------</span>
-<span class="ansi-red-intense-fg ansi-bold">TypeError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-intense-fg ansi-bold">In[27], line 3</span>
-<span class="ansi-green-fg">      1</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,0,255)">sklearn</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">ensemble</span><span style="color: rgb(188,188,188)"> </span><span class="ansi-bold" style="color: rgb(0,135,0)">import</span> RandomForestClassifier
-<span class="ansi-green-fg">      2</span> better <span style="color: rgb(98,98,98)">=</span> RandomForestClassifier(random_state<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">42</span>)
-<span class="ansi-green-intense-fg ansi-bold">----&gt; 3</span> <span class="ansi-yellow-bg">better</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">fit</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">x_train</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">y_train</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">class_weight</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">'</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">balanced</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">'</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-fg">      4</span> y_pred_better <span style="color: rgb(98,98,98)">=</span> better<span style="color: rgb(98,98,98)">.</span>predict(x_test)
-<span class="ansi-green-fg">      5</span> accuracy_better <span style="color: rgb(98,98,98)">=</span> accuracy_score(y_test, y_pred_better)
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Accuracy with Random Forest: 0.86
+              precision    recall  f1-score   support
 
-File <span class="ansi-green-intense-fg ansi-bold">c:\Users\gts00\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py:1363</span>, in <span class="ansi-cyan-fg">_fit_context.&lt;locals&gt;.decorator.&lt;locals&gt;.wrapper</span><span class="ansi-blue-intense-fg ansi-bold">(estimator, *args, **kwargs)</span>
-<span class="ansi-green-fg">   1356</span>     estimator<span style="color: rgb(98,98,98)">.</span>_validate_params()
-<span class="ansi-green-fg">   1358</span> <span class="ansi-bold" style="color: rgb(0,135,0)">with</span> config_context(
-<span class="ansi-green-fg">   1359</span>     skip_parameter_validation<span style="color: rgb(98,98,98)">=</span>(
-<span class="ansi-green-fg">   1360</span>         prefer_skip_nested_validation <span class="ansi-bold" style="color: rgb(175,0,255)">or</span> global_skip_validation
-<span class="ansi-green-fg">   1361</span>     )
-<span class="ansi-green-fg">   1362</span> ):
-<span class="ansi-green-intense-fg ansi-bold">-&gt; 1363</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> <span class="ansi-yellow-bg">fit_method</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">estimator</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">args</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">kwargs</span><span class="ansi-yellow-bg">)</span>
+           0       0.87      0.96      0.91      1147
+           1       0.79      0.54      0.64       353
 
-<span class="ansi-red-intense-fg ansi-bold">TypeError</span>: BaseForest.fit() got an unexpected keyword argument 'class_weight'</pre>
+    accuracy                           0.86      1500
+   macro avg       0.83      0.75      0.78      1500
+weighted avg       0.85      0.86      0.85      1500
+
+</pre>
 </div>
 </div>
 </div>
@@ -7682,7 +7675,7 @@ File <span class="ansi-green-intense-fg ansi-bold">c:\Users\gts00\AppData\Local\
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>way better results, but the model high false negative rates,</p>
+<p>way better results, but the model has high false negative rates,</p>
 </div>
 </div>
 </div>

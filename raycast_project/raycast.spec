@@ -5,13 +5,14 @@ a = Analysis(
     ['raycast.py'],
     pathex=[],
     binaries=[],
-    datas=[],
+    datas=[('metal1.mp3', '.'), ('metal2.mp3', '.'), ('test1.mp3', '.'), ('wood1.mp3', '.'), ('step2.mp3', '.'), ('step3.mp3', '.')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
     excludes=[],
     noarchive=False,
+    optimize=0,
 )
 pyz = PYZ(a.pure)
 
@@ -28,7 +29,7 @@ exe = EXE(
     upx=True,
     upx_exclude=[],
     runtime_tmpdir=None,
-    console=True,
+    console=False,
     disable_windowed_traceback=False,
     argv_emulation=False,
     target_arch=None,

@@ -17,8 +17,8 @@ bright = np.array(im_data)
 bright[bright < 0.5] = 0
 bright[bright >= 0.5] = 1
 bright = np.zeros([100,100])
-bd = 1# base density
-max_speed = 1
+bd = 1 # base density
+max_speed = 1.2
 bs = 2
 mask = np.zeros_like(bright)
 
@@ -26,13 +26,14 @@ mask = np.zeros_like(bright)
 dt = 0.1
 vd = 0.1
 dd = 0.0
-td = 0.01
+td = 0.03
 id = 0.01
 
 dx = 1
 t_buoyancy = -0.01
-substeps = 30
+substeps = 50
 gravity = 0.0
+g = 0.000
 
 #derivatves 
 
@@ -59,8 +60,8 @@ ax.set_aspect('equal')
 
 implot =  plt.imshow(
     density, 
-    cmap="inferno",
-    vmin=-0,
+    cmap="twilight",
+    vmin=-2,
     vmax=2
     )
 
@@ -134,8 +135,8 @@ def solve(n):
         
         
         
-        dbx = abs(derivative(bright,0))>0.1
-        dby = abs(derivative(bright,1))>0.1
+        #dbx = abs(derivative(bright,0))>0.1
+        #dby = abs(derivative(bright,1))>0.1
 
         #density[bright < 0.2] = bd
         #ink[:,0] = mask
@@ -154,13 +155,25 @@ def solve(n):
             #ink[45:50,0:5] = 2
             pass
         
-        heat[-2:,30:50] = 2
+        #heat[-2:,30:50] = 2
+        ink[-2:,35:45] += 0.01
+        velocity_u[-2:,35:45] = -0.5
+        density[-2:,35:45] = bd*1.0
         #heat -= (heat-(-0.3))*0.0001
         
 
         
         #heat[-2:,3:] = 2
- 
+
+        gravity = density.copy()
+
+        for i in range(40):
+            d2gx = second_derivative(gravity,0)
+            d2gy = second_derivative(gravity,1)
+            gravity -= (d2gx+d2gy)*0.7
+
+        dgx = derivative(gravity,0)
+        dgy = derivative(gravity,1)
 
         dux = derivative(velocity_u, 0)
         duy = derivative(velocity_u, 1)
@@ -173,6 +186,7 @@ def solve(n):
         d2vx = second_derivative(velocity_v, 0)
         d2vy = second_derivative(velocity_v, 1)
 
+        
         ddx = derivative(density, 0)
         ddy = derivative(density, 1)
         d2dx = second_derivative(density, 0)
@@ -189,11 +203,6 @@ def solve(n):
         d2ty = second_derivative(heat, 1)
 
 
-        dut = -(
-            dux*velocity_u + duy*velocity_v + 
-            ddx - (d2ux+d2uy)*vd 
-            - gravity
-            )
         
         ddt = -(
             dux*density + dvy*density +
@@ -201,10 +210,17 @@ def solve(n):
             (d2dx+d2dy)*dd
         )
         
+
+        dut = -(
+            dux*velocity_u + duy*velocity_v + 
+            ddx + g*dgx - (d2ux+d2uy)*vd 
+            
+            )
+        
         
         dvt = -(
             dvx*velocity_u + dvy*velocity_v +
-            ddy - (d2vx+d2vy)*vd 
+            ddy + g*dgy - (d2vx+d2vy)*vd 
             )
         
         
@@ -216,7 +232,7 @@ def solve(n):
         
         
         dtt = -(
-            dtx*velocity_u*density +  dty*velocity_v*density-
+            dtx*velocity_u +  dty*velocity_v-
             (d2tx + d2ty)*td
             )
         
@@ -274,8 +290,8 @@ def solve(n):
     mag = np.sqrt(velocity_u**2 + velocity_v**2) 
     curl = (duy - dvx)*10
     div = (dux + dvy)*10
-    deviation = density - density.mean()
-    implot.set_data(heat)
+    deviation = (density - density.mean())**2
+    implot.set_data(curl)
 
     
      
@@ -285,9 +301,9 @@ mp4_path = path + '.mp4'
 writer = animation.PillowWriter(fps=30,bitrate=400)
 print("running")
 data = animation.FuncAnimation(figure,solve, frames = 1800, interval = 1)
-#plt.show()
+plt.show()
 print("saving")
-data.save(gif_path,writer = writer)
+#data.save(gif_path,writer = writer)
 print("done")
 from gif_to_mp4 import Converter
-Converter(gif_path,mp4_path)
+#Converter(gif_path,mp4_path)

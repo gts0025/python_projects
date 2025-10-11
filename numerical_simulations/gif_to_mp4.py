@@ -10,4 +10,5 @@ class Converter:
         
         clip = mp.VideoFileClip(gif_path)
         clip.write_videofile(video_path)
+        clip.close()
 

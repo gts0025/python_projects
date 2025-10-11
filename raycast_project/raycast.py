@@ -2,8 +2,16 @@ import pygame
 from vector2_class import *
 from random import randint
 pygame.init()
-import os
-os.chdir(os.path.dirname(os.path.abspath(__file__)))
+import sys, os
+
+if getattr(sys, 'frozen', False):
+    # If running from PyInstaller bundle
+    base_path = sys._MEIPASS
+else:
+    base_path = os.path.dirname(os.path.abspath(__file__))
+
+os.chdir(base_path)
+
 
 screen = pygame.display.set_mode((1000,600))
 center = Vector2(500,300)

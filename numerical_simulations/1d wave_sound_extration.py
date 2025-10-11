@@ -93,7 +93,7 @@ def get_sound(uc, up, c, dt):
     return sound
 
 
-def viz_sumualtion(iterations):
+def viz_sumualtion(iterations,uc, up, c, dt):
     
     for i in range(iterations):
     
@@ -104,7 +104,7 @@ def viz_sumualtion(iterations):
             uc[-2] = voice[i + sps]
             up[-2] = voice[i + sps]
         
-            wave_step()
+            wave_step(uc, up, c, dt)
             
         plt.plot(uc)
         plt.ylim(-1,1)
@@ -128,7 +128,7 @@ def viz_freq(sound,ftime):
     plt.show()
 
 start = time.time()
-#viz_sumualtion(1000)
+viz_sumualtion(1000,uc, up, c, dt)
 sound = get_sound(uc, up, c, dt)
 
 #plt.plot(data)
@@ -136,7 +136,7 @@ sound = get_sound(uc, up, c, dt)
 
 #plt.show()
 end = time.time()
-viz_freq(sound,ftime)
+#viz_freq(sound,ftime)
 
 
 print(end-start)
