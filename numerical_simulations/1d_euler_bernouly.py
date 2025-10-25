@@ -10,17 +10,24 @@ import matplotlib.pyplot as plt
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 #initial gaussioan disturbance
-x = np.linspace(0,5,50)
-space = ((x/10)**2)*0.7
-#space = np.zeros_like(x)
+x = np.linspace(0,0.1,20)
+space = ((x/10)**2)*0.3
+#space = np.exp(-x**2)
+space = np.zeros_like(x)
 up = space
 uc = space
 
-c = 1# density
-d = 0# viscosity
-g = 3e-9
-dx = x[1]-x[0]
+E = 3e10       # Pa
+rho = 2400     # kg/m^3
+A = 0.1 * 0.1  # m² (exemplo)
+I = (0.1**4)/12
+c = np.sqrt(E*I/(rho*A))
 
+
+d = 1e-6 #viscosity
+g = 9.8
+dx = x[1]-x[0]
+dt = 1e-5
 
 """
  
@@ -31,7 +38,6 @@ dt < dx/c
 
 """
 
-dt = 0.4*(dx**2/c)
 
 data = [] # final sound data 
 
@@ -76,9 +82,8 @@ def wave_step(uc, up, c, dt):
     uc = un
 
     un *= 1-(d*dt)
-    uc[0] = 0
-    uc[-1] = uc[-2]*0
-
+    uc[:1] = 0
+    uc[-1] = uc[-2]
     return uc,up
 
 
@@ -86,13 +91,13 @@ def wave_step(uc, up, c, dt):
 def bending_step(uc, up, c, dt):
     d2ux = -second(uc,2)
 
-    un  = (2*uc - up +  (d2ux)*(dt**2) - ((uc-up)/dt)*d - g*dt) 
+    un  = (2*uc - up +  (d2ux)*(dt**2) - ((uc-up)/dt)*d - g*dt**2) 
     up = uc
     uc = un
 
-    un *= 1-(d*dt)
-    uc[:5] = 0
-    uc[-1] = uc[-2] + (uc[-2]-uc[-3])
+    uc[0] = 0
+    uc[-1] = 0
+    #uc[-1] = uc[-2] + (uc[-2]-uc[-3])
 
 
     return uc,up
@@ -105,7 +110,7 @@ def energy(uc, up, c,dt):
 
 #plotting simulation itself
 
-
+data = []
 
 def viz_sumualtion(iterations,uc, up, c, dt):
     
@@ -114,9 +119,11 @@ def viz_sumualtion(iterations,uc, up, c, dt):
         plt.cla()
         plt.title(f"1d euler-bernouly equation. dt:{round(i*dt,2)}")
         
-        for j in range(100):
+        for j in range(10):
             uc,up = bending_step(uc, up, c, dt)
             #uc,up = wave_step(uc, up, c, dt)
+            
+           
 
         et.append(energy(uc, up, c, dt))
         if i > 0:
@@ -124,10 +131,11 @@ def viz_sumualtion(iterations,uc, up, c, dt):
 
         
         
-        plt.plot(x,space)
-        plt.plot(x,uc)
-    
-        plt.ylim(-1,1)
+        #plt.plot(x,space)
+        data.append(min(uc))
+        plt.plot(data)
+        print(data[-1])
+        #plt.ylim(-0.1,0.1)
         plt.pause(1e-10)
         plt.cla()
         
