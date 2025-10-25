@@ -1,3 +1,2 @@
-# street fighter style game, with simple fast and slow atacks, dash and cover 
-# simple menu system, sound effects, and art
+simple strategy fight game, with timing and precision
 
